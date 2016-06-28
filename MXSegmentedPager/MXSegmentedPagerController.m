@@ -22,6 +22,24 @@
 
 #import "MXSegmentedPagerController.h"
 
+#pragma mark - UIScrollView extension
+
+@interface UIScrollView (UpdateEdgeInset)
+- (void)updateEdgeInsetWithBottom:(CGFloat)bottom;
+@end
+
+@implementation UIScrollView (UpdateEdgeInset)
+- (UIEdgeInsets)updatedEdgeInset:(UIEdgeInsets)inset withBottom:(CGFloat)bottom {
+    return UIEdgeInsetsMake(inset.top, inset.left, bottom, inset.right);
+}
+- (void)updateEdgeInsetWithBottom:(CGFloat)bottom {
+    self.contentInset = [self updatedEdgeInset:self.contentInset withBottom:bottom];
+    self.scrollIndicatorInsets = [self updatedEdgeInset:self.scrollIndicatorInsets withBottom:bottom];
+}
+@end
+
+#pragma mark - MXSegmentedPagerController
+
 @interface MXSegmentedPagerController () <MXPageSegueDelegate>
 
 @end
@@ -72,7 +90,33 @@
         [self addChildViewController:viewController];
         [viewController didMoveToParentViewController:self];
 
-        return viewController.view;
+        UIView *view = viewController.view;
+        
+        CGFloat barHeight = 0;
+        barHeight += CGRectGetHeight(self.tabBarController.tabBar.frame);
+        if (self.navigationController.toolbarHidden == NO) {
+            barHeight += CGRectGetHeight(self.navigationController.toolbar.frame);
+        }
+        
+        if ((self.edgesForExtendedLayout & UIRectEdgeBottom) && (barHeight > 0)) {
+            if ([view isKindOfClass:[UIScrollView class]]) {
+                UIScrollView *scrollView = (UIScrollView*)view;
+                [scrollView updateEdgeInsetWithBottom: barHeight];
+            } else {
+                for (UIView* view in view.subviews) {
+                    if ([view isKindOfClass:[UIScrollView class]]) {
+                        CGRect barFrame = CGRectMake(0, CGRectGetHeight(self.view.frame) - barHeight, CGRectGetHeight(self.view.frame), barHeight);
+                        CGRect intersect = CGRectIntersection(view.frame, barFrame);
+                        CGFloat intersectHeight = CGRectGetHeight(intersect);
+                        
+                        UIScrollView *scrollView = (UIScrollView*)view;
+                        [scrollView updateEdgeInsetWithBottom: intersectHeight];
+                    }
+                }
+            }
+        }
+        
+        return view;
     }
     return nil;
 }
