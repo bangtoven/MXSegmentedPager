@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0Wd-1Y-mgZ">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Item-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MXViewController" customModule="MXSegmentedPager_Swift" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,6 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="ttq-v9-95Z"/>
                     <connections>
                         <segue destination="l4v-Ls-4Ga" kind="custom" identifier="mx_page_0" customClass="MXPageSegue" id="thh-Tu-bFw"/>
                         <segue destination="X9u-4R-kMx" kind="custom" identifier="mx_page_1" customClass="MXPageSegue" id="E3q-vK-r61"/>
@@ -25,7 +26,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="414" y="355"/>
+            <point key="canvasLocation" x="530" y="399"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="uPh-KL-A3P">
@@ -129,7 +130,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0pF-dM-hSn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1364" y="355"/>
+            <point key="canvasLocation" x="1364" y="399"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="enB-C7-Vh1">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="0Wd-1Y-mgZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="CDV-MI-OUu">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="M8T-MC-VRT"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xNX-Ro-pEJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-282" y="399"/>
         </scene>
     </scenes>
 </document>

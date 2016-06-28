@@ -103,14 +103,23 @@
                 UIScrollView *scrollView = (UIScrollView*)view;
                 [scrollView updateEdgeInsetWithBottom: barHeight];
             } else {
-                for (UIView* view in view.subviews) {
-                    if ([view isKindOfClass:[UIScrollView class]]) {
-                        CGRect barFrame = CGRectMake(0, CGRectGetHeight(self.view.frame) - barHeight, CGRectGetHeight(self.view.frame), barHeight);
-                        CGRect intersect = CGRectIntersection(view.frame, barFrame);
-                        CGFloat intersectHeight = CGRectGetHeight(intersect);
-                        
-                        UIScrollView *scrollView = (UIScrollView*)view;
-                        [scrollView updateEdgeInsetWithBottom: intersectHeight];
+                for (UIView* subView in view.subviews) {
+                    UIScrollView *scrollView;
+                    if ([subView isKindOfClass:[UIScrollView class]]) {
+                        scrollView = (UIScrollView*)subView;
+                    } else if ([subView isKindOfClass:[UIWebView class]]) {
+                        scrollView = ((UIWebView*)subView).scrollView;
+                    }
+                    
+                    if (scrollView != nil) {
+                        if (true) { // need to check the bottom layout constraint between view and subView.
+                            [scrollView updateEdgeInsetWithBottom: barHeight];
+                        } else {
+                            CGRect barFrame = CGRectMake(0, CGRectGetHeight(self.view.frame) - barHeight, CGRectGetHeight(self.view.frame), barHeight);
+                            CGRect intersect = CGRectIntersection(scrollView.frame, barFrame);
+                            CGFloat intersectHeight = CGRectGetHeight(intersect);
+                            [scrollView updateEdgeInsetWithBottom: intersectHeight];
+                        }
                     }
                 }
             }
